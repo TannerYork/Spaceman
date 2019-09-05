@@ -2,6 +2,18 @@ import random
 import re
 from os import system
 
+def get_words_list():
+    '''
+    A function that reads a text file and returns an array of availible words
+    Returns:
+        array: The list of words read from the text file
+    '''
+    f = open('./words.txt', 'r')
+    words_list = f.readlines()
+    f.close()
+    return words_list[0].split(' ')
+
+
 def load_word():
     '''
     A function that reads a text file of words and randomly selects one to use as the secret word
@@ -76,6 +88,30 @@ def has_been_guessed(guess, letters_guessed):
             return True
     return False
 
+def changed_word(current_word_list, secret_word):
+    '''
+    A function to get a new word with the same characters as the current guessed word
+    Args:
+        current_word_list (array): The characters of the current guessed word
+        secret_word: The current secret word
+    Returns:
+        array: A list that has the same amount of letters and letters in the same index as current_word_list
+    '''
+    matched_expression = []
+    words_list = get_words_list()
+    for character in current_word_list: matched_expression.append('.')
+    for i, char in enumerate(current_word_list): 
+        if char != '_': 
+            matched_expression[i] = char
+        print(matched_expression)
+    matched_expression = ''.join(matched_expression)
+    print(matched_expression)
+
+    for word in words_list:
+        if re.match(matched_expression, word):
+            return word
+    return secret_word
+
 def spaceman(secret_word):
     '''
     A function that controls the game of spaceman. Will start spaceman in the command line.
@@ -88,11 +124,11 @@ def spaceman(secret_word):
 
     is_playing = True;
     while is_playing:
-        current_word = get_guessed_word(secret_word, letters_guessed)
+        current_word_list = get_guessed_word(secret_word, letters_guessed)
 
         system('clear')
         print(prompt)
-        print(f'Current word: {current_word}')
+        print(f'Current word: {current_word_list}', f'Secret word: {secret_word}')
         print(f'Letters guessed: {letters_guessed}')
         print(f'You have {guesses_left} guesses left, please enter one letter per round')
         print('---------------------------------------')
@@ -115,6 +151,7 @@ def spaceman(secret_word):
         elif is_guess_in_word(user_guess, secret_word):
             prompt = f'Correct! {user_guess} in the the secret word.'
             letters_guessed.append(user_guess)
+            secret_word = changed_word(current_word_list, secret_word)
         else:
             prompt = f'Incorrect. {user_guess} is not in the secret word'
             letters_guessed.append(user_guess)
@@ -131,7 +168,8 @@ def spaceman(secret_word):
             elif user_input == 'N' or user_input == 'n':
                 is_playing = False
         if is_word_guessed(secret_word, letters_guessed):
-            current_word = re.sub('\s', '', current_word)
+            current_word_list = re.sub('\s', '', 
+            )
 
 #These function calls that will start the game
 secret_word = load_word()

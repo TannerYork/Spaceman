@@ -142,9 +142,10 @@ def spaceman(secret_word, spaceman_words_list):
         print('---------------------------------------')
 
         user_guess = input('Enter a letter: ')
-        while len(user_guess) > 1 or user_guess == '' or user_guess == ' ' or re.match('[a-z]', user_guess) == None:
+        while len(user_guess) > 1 or user_guess == '' or user_guess == ' ' or re.match('([a-z]|[A-Z])', user_guess) == None:
             user_guess = input('Enter only one letter: ') 
-        
+        user_guess = user_guess.lower()
+
         if has_been_guessed(user_guess, letters_guessed):
             prompt = f'You already guessed {user_guess}'
         elif is_guess_in_word(user_guess, secret_word):

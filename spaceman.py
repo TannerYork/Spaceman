@@ -142,6 +142,7 @@ def spaceman(secret_word, spaceman_words_list):
         print('---------------------------------------')
 
         user_guess = input('Enter a letter: ')
+        user_guess = user_guess.replace(' ', '')
         while len(user_guess) > 1 or user_guess == '' or user_guess == ' ' or re.match('([a-z]|[A-Z])', user_guess) == None:
             user_guess = input('Enter only one letter: ') 
         user_guess = user_guess.lower()

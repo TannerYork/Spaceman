@@ -179,7 +179,42 @@ def spaceman(secret_word, spaceman_words_list):
         if is_word_guessed(secret_word, letters_guessed):
             current_word = re.sub('\s', '', current_word)
 
+def test():
+    words_list = load_words_list()
+    if type(words_list) is not list:
+        print('load_words list did not return a list')
+        return
+    secret_word = load_word(words_list)
+    if type(secret_word) is not str:
+        print('load_word did not return string')
+        return
+    letters_guessed = ['a', 'i', 'p']
+    guessed = is_word_guessed(secret_word, letters_guessed)
+    if type(guessed) is not bool:
+        print('is_word_guessed did not return a bool')
+        return
+    current_word = get_guessed_word(secret_word, letters_guessed)
+    if type(current_word) is not str:
+        print('get_guessed_word did not return a list')
+        return
+    correct_guess = is_guess_in_word('r', secret_word)
+    if type(correct_guess) is not bool:
+        print('is_guess_in_word did not return a bool')
+        return
+    already_guessed = has_been_guessed('a', letters_guessed)
+    if type(already_guessed) is not bool:
+        print('has_been_guessed did not return a bool')
+        return
+    new_word = changed_word(current_word, secret_word, words_list)
+    if type(new_word) is not str:
+        print('changed_word did not return a string')
+        return
+    print('All functions ran correctly')
+
+
 #These function calls that will start the game
-gloabal_words_list = load_words_list()
-secret_word = load_word(gloabal_words_list)
-spaceman(secret_word, gloabal_words_list)
+if __name__ == '__main__':
+    gloabal_words_list = load_words_list()
+    secret_word = load_word(gloabal_words_list)
+    spaceman(secret_word, gloabal_words_list)
+    # test()

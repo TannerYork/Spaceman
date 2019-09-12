@@ -2,23 +2,11 @@ import random
 import re
 from os import system
 
-def get_words_list():
-    '''
-    A function that reads a text file and returns an array of availible words
-    Returns:
-        array: The list of words read from the text file
-    '''
-    f = open('./words.txt', 'r')
-    words_list = f.readlines()
-    f.close()
-    return words_list[0].split(' ')
-
-
 def load_words_list():
     '''
     A function that reads a text file of words and returns an array of words
     Returns: 
-           array: The avaiable words to be selected as the secret word
+           array: Reads from a text file to get the avaiable words to be selected as the secret word
     '''
     f = open('./words.txt', 'r')
     words_list = f.readlines()

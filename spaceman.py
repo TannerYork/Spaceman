@@ -151,7 +151,7 @@ def spaceman(secret_word, spaceman_words_list):
             user_input = input('You Won! Want to play agian? Y/n ')
             if user_input == 'Y' or user_input == 'y' or user_input == '' or re.match('\s+', user_input):
                 letters_guessed = []
-                secret_word = load_word()
+                secret_word = load_word(spaceman_words_list)
                 guesses_left = len(secret_word)
             elif user_input == 'N' or user_input == 'n':
                 is_playing = False
@@ -161,7 +161,7 @@ def spaceman(secret_word, spaceman_words_list):
             if user_input == 'Y' or user_input == 'y' or user_input == '' or re.match('\s+', user_input):
                 prompt = 'Welcome back to Spaceman!'
                 letters_guessed = []
-                secret_word = load_word()
+                secret_word = load_word(spaceman_words_list)
                 guesses_left = len(secret_word)
             elif user_input == 'N' or user_input == 'n':
                 is_playing = False

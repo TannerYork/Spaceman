@@ -125,7 +125,7 @@ def spaceman(secret_word, spaceman_words_list):
         
         system('clear')
         print(prompt)
-        print(f'Current word: {current_word},', f'Secret Word: {original_secret_word} ;)')
+        print(f'Current word: {current_word}')
         print(f'Letters guessed: {letters_guessed}')
         print(f'You have {guesses_left} guesses left, please enter one letter per round')
         print('---------------------------------------')
@@ -171,26 +171,45 @@ def spaceman(secret_word, spaceman_words_list):
         if is_word_guessed(secret_word, letters_guessed):
             current_word = re.sub(r'\s', '', current_word)
 
-def test_spaceman_functions():
+def test_load_owrds_list():
     words_list = load_words_list()
     assert type(words_list) == list, 'load_words list did not return a list'
 
+def test_load_word():
+    words_list = load_words_list()
     secret_word = load_word(words_list)
     assert type(secret_word) == str, 'load_word did not return string'
 
+def test_is_word_guessed():
+    words_list = load_words_list()
     letters_guessed = ['a', 'i', 'p']
+    secret_word = load_word(words_list)
     guessed = is_word_guessed(secret_word, letters_guessed)
-    assert guessed == False, 'is_word_guessed did not return a bool'
+    assert guessed == False, 'is_word_guessed did not return false'
 
+def test_get_guessed_word():
+    words_list = load_words_list()
+    letters_guessed = ['a', 'i', 'p']
+    secret_word = load_word(words_list)
     current_word = get_guessed_word(secret_word, letters_guessed)
     assert type(current_word) == str, 'get_guessed_word did not return a string'
 
+def test_is_guess_in_word():
+    words_list = load_words_list()
+    secret_word = load_word(words_list)
     correct_guess = is_guess_in_word('r', secret_word)
     assert type(correct_guess) == bool, 'is_guess_in_word did not return a bool'
 
+def test_has_been_guessed():
+    letters_guessed = ['a', 'i', 'p']
     already_guessed = has_been_guessed('a', letters_guessed)
-    assert already_guessed == True, 'has_been_guessed did not return a bool'
+    assert already_guessed == True, 'has_been_guessed did not return true'
 
+def test_changed_word():
+    words_list = load_words_list()
+    letters_guessed = ['a', 'i', 'p']
+    secret_word = load_word(words_list)
+    current_word = get_guessed_word(secret_word, letters_guessed)
     new_word = changed_word(current_word, secret_word, words_list)
     assert type(new_word) == str, 'changed_word did not return a string'
 

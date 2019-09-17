@@ -117,6 +117,7 @@ def spaceman(secret_word, spaceman_words_list):
     letters_guessed = []
     guesses_left = len(secret_word)
     prompt = 'Welcome to Spaceman!'
+    original_secret_word = secret_word
 
     is_playing = True;
     while is_playing:
@@ -124,7 +125,7 @@ def spaceman(secret_word, spaceman_words_list):
         
         system('clear')
         print(prompt)
-        print(f'Current word: {current_word}')
+        print(f'Current word: {current_word},', f'Secret Word: {original_secret_word} ;)')
         print(f'Letters guessed: {letters_guessed}')
         print(f'You have {guesses_left} guesses left, please enter one letter per round')
         print('---------------------------------------')
@@ -152,6 +153,7 @@ def spaceman(secret_word, spaceman_words_list):
             if user_input == 'Y' or user_input == 'y' or user_input == '' or re.match(r'\s+', user_input):
                 letters_guessed = []
                 secret_word = load_word(spaceman_words_list)
+                original_secret_word = secret_word
                 guesses_left = len(secret_word)
             elif user_input == 'N' or user_input == 'n':
                 is_playing = False
@@ -162,6 +164,7 @@ def spaceman(secret_word, spaceman_words_list):
                 prompt = 'Welcome back to Spaceman!'
                 letters_guessed = []
                 secret_word = load_word(spaceman_words_list)
+                original_secret_word = secret_word
                 guesses_left = len(secret_word)
             elif user_input == 'N' or user_input == 'n':
                 is_playing = False

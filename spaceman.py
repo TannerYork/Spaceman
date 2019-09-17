@@ -131,7 +131,7 @@ def spaceman(secret_word, spaceman_words_list):
 
         user_guess = input('Enter a letter: ')
         user_guess = user_guess.replace(' ', '')
-        while len(user_guess) > 1 or user_guess == '' or user_guess == ' ' or re.match('([a-z]|[A-Z])', user_guess) == None:
+        while len(user_guess) > 1 or user_guess == '' or user_guess == ' ' or re.match(r'([a-z]|[A-Z])', user_guess) == None:
             user_guess = input('Enter only one letter: ') 
         user_guess = user_guess.lower()
 
@@ -149,7 +149,7 @@ def spaceman(secret_word, spaceman_words_list):
     
         if is_word_guessed(secret_word, letters_guessed):
             user_input = input('You Won! Want to play agian? Y/n ')
-            if user_input == 'Y' or user_input == 'y' or user_input == '' or re.match('\s+', user_input):
+            if user_input == 'Y' or user_input == 'y' or user_input == '' or re.match(r'\s+', user_input):
                 letters_guessed = []
                 secret_word = load_word(spaceman_words_list)
                 guesses_left = len(secret_word)
@@ -158,7 +158,7 @@ def spaceman(secret_word, spaceman_words_list):
         elif guesses_left == 0:
             print(f'The word was {secret_word}')
             user_input = input('You Lost! Want to try agian? Y/n ')
-            if user_input == 'Y' or user_input == 'y' or user_input == '' or re.match('\s+', user_input):
+            if user_input == 'Y' or user_input == 'y' or user_input == '' or re.match(r'\s+', user_input):
                 prompt = 'Welcome back to Spaceman!'
                 letters_guessed = []
                 secret_word = load_word(spaceman_words_list)
@@ -166,44 +166,33 @@ def spaceman(secret_word, spaceman_words_list):
             elif user_input == 'N' or user_input == 'n':
                 is_playing = False
         if is_word_guessed(secret_word, letters_guessed):
-            current_word = re.sub('\s', '', current_word)
+            current_word = re.sub(r'\s', '', current_word)
 
-def test():
+def test_spaceman_functions():
     words_list = load_words_list()
-    if type(words_list) is not list:
-        print('load_words list did not return a list')
-        return
+    assert type(words_list) == list, 'load_words list did not return a list'
+
     secret_word = load_word(words_list)
-    if type(secret_word) is not str:
-        print('load_word did not return string')
-        return
+    assert type(secret_word) == str, 'load_word did not return string'
+
     letters_guessed = ['a', 'i', 'p']
     guessed = is_word_guessed(secret_word, letters_guessed)
-    if type(guessed) is not bool:
-        print('is_word_guessed did not return a bool')
-        return
-    current_word = get_guessed_word(secret_word, letters_guessed)
-    if type(current_word) is not str:
-        print('get_guessed_word did not return a list')
-        return
-    correct_guess = is_guess_in_word('r', secret_word)
-    if type(correct_guess) is not bool:
-        print('is_guess_in_word did not return a bool')
-        return
-    already_guessed = has_been_guessed('a', letters_guessed)
-    if type(already_guessed) is not bool:
-        print('has_been_guessed did not return a bool')
-        return
-    new_word = changed_word(current_word, secret_word, words_list)
-    if type(new_word) is not str:
-        print('changed_word did not return a string')
-        return
-    print('All functions ran correctly')
+    assert guessed == False, 'is_word_guessed did not return a bool'
 
+    current_word = get_guessed_word(secret_word, letters_guessed)
+    assert type(current_word) == str, 'get_guessed_word did not return a string'
+
+    correct_guess = is_guess_in_word('r', secret_word)
+    assert type(correct_guess) == bool, 'is_guess_in_word did not return a bool'
+
+    already_guessed = has_been_guessed('a', letters_guessed)
+    assert already_guessed == True, 'has_been_guessed did not return a bool'
+
+    new_word = changed_word(current_word, secret_word, words_list)
+    assert type(new_word) == str, 'changed_word did not return a string'
 
 #These function calls that will start the game
 if __name__ == '__main__':
     gloabal_words_list = load_words_list()
     secret_word = load_word(gloabal_words_list)
     spaceman(secret_word, gloabal_words_list)
-    # test()
